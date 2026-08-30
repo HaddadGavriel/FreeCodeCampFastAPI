@@ -29,13 +29,13 @@ def create_access_token(data: dict):
 def verify_access_token(token: str, credentials_exception):
     try:
         payload = jwt.decode(token, secret_key, algorithms=[algorithm])
-        id: str = payload.get("sub")
+        id: str = payload.get("user_id")
         if id is None:
             raise credentials_exception
 
         token_data = TokenData(id=id)
         return token_data
-    except JWTError:
+    except JWTError as e:
         raise credentials_exception
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
