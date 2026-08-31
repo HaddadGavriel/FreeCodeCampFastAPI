@@ -15,7 +15,7 @@ secret_key = os.getenv("JWT_SECRET_KEY")
 algorithm = os.getenv("JWT_ALGORITHM")
 access_token_expire_minutes = int(os.getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES"))
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 def create_access_token(data: dict):
@@ -29,13 +29,13 @@ def create_access_token(data: dict):
 def verify_access_token(token: str, credentials_exception):
     try:
         payload = jwt.decode(token, secret_key, algorithms=[algorithm])
-        id: str = payload.get("sub")
-        if id is None:
+        user_id = payload.get("user_id")
+
+        if not isinstance(user_id, int):
             raise credentials_exception
 
-        token_data = TokenData(id=id)
-        return token_data
-    except JWTError:
+        return TokenData(id=user_id)
+    except JWTError as e:
         raise credentials_exception
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
