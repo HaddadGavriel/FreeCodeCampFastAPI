@@ -5,8 +5,11 @@ from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.orm import Session
 
 from .schemas import TokenData
+from .database import get_db
+from . import models
 
 env_path = Path(__file__).parent / ".env"
 load_dotenv(env_path)
@@ -38,10 +41,14 @@ def verify_access_token(token: str, credentials_exception):
     except JWTError:
         raise credentials_exception
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    return verify_access_token(token, credentials_exception)
+
+    token = verify_access_token(token, credentials_exception) 
+    user = db.query(models.User).filter(models.User.id == token.id).first()
+
+    return user
