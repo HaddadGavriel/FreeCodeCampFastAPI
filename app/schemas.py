@@ -14,6 +14,8 @@ class PostCreate(Post):
 class PostResponse(Post):
     id: int
     created_at: datetime
+    owner: "UserResponse"
+
 
     class Config:
         from_attributes = True

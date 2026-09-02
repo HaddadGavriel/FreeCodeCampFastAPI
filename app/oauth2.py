@@ -1,8 +1,5 @@
-import os
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
-from pathlib import Path
-from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
@@ -10,13 +7,11 @@ from sqlalchemy.orm import Session
 from .schemas import TokenData
 from .database import get_db
 from . import models
+from .config import settings
 
-env_path = Path(__file__).parent / ".env"
-load_dotenv(env_path)
-
-secret_key = os.getenv("JWT_SECRET_KEY")
-algorithm = os.getenv("JWT_ALGORITHM")
-access_token_expire_minutes = int(os.getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES"))
+secret_key = settings.jwt_secret_key
+algorithm = settings.jwt_algorithm
+access_token_expire_minutes = settings.jwt_access_token_expire_minutes
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
