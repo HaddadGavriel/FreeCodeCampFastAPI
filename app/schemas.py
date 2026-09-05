@@ -1,25 +1,7 @@
-from typing import Optional
+from typing import Literal, Optional
 
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
-
-class Post(BaseModel):
-    title: str
-    content: str
-    published: bool = True
-
-class PostCreate(Post):
-    pass
-
-class PostResponse(Post):
-    id: int
-    created_at: datetime
-    owner: "UserResponse"
-
-
-    class Config:
-        from_attributes = True
-
 
 class UserCreate(BaseModel):
     email: EmailStr
@@ -43,3 +25,31 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[int] = None
+
+class PostBase(BaseModel):
+    title: str
+    content: str
+    published: bool = True
+
+class PostCreate(PostBase):
+    pass
+
+class PostResponse(PostBase):
+    id: int
+    created_at: datetime
+    owner: UserResponse
+
+    class Config:
+        from_attributes = True
+
+class PostVoteResponse(BaseModel):
+    Post: PostResponse
+    votes: int
+
+    class Config:
+        from_attributes = True
+
+class Vote(BaseModel):
+    post_id: int
+    dir: Literal[0, 1]
+
