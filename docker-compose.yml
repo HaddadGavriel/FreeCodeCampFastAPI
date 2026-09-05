@@ -1,0 +1,11 @@
+version: '3'
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://neondb_owner:npg_C7PbWyHD5pYL@ep-calm-sound-auwmmi9s-pooler.c-10.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - JWT_ALGORITHM=HS256
+      - JWT_SECRET_KEY=hgvjhgvnljbnhjgcbydtcbuygiunimgy7f656867ty98y867nf76t
+      - JWT_ACCESS_TOKEN_EXPIRE_MINUTES=60
