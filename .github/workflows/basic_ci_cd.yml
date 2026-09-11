@@ -4,12 +4,6 @@ on: [push, pull_request]
 
 jobs:
     job1:
-        env:
-            DATABASE_URL: postgresql://neondb_owner:npg_C7PbWyHD5pYL@ep-calm-sound-auwmmi9s-pooler.c-10.us-east-1.aws.neon.tech/fcc_fastapi?sslmode=require&channel_binding=require
-            TEST_DATABASE_URL: postgresql://neondb_owner:npg_C7PbWyHD5pYL@ep-calm-sound-auwmmi9s-pooler.c-10.us-east-1.aws.neon.tech/fcc_fastapi_test?sslmode=require&channel_binding=require
-            JWT_ALGORITHM: HS256
-            JWT_SECRET_KEY: hgvjhgvnljbnhjgcbydtcbuygiunimgy7f656867ty98y867nf76t
-            JWT_ACCESS_TOKEN_EXPIRE_MINUTES: 60
         runs-on: ubuntu-latest
         steps:
             - name: Check out code
