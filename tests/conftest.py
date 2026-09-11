@@ -9,7 +9,7 @@ from app.config import settings
 from app.oauth2 import create_access_token
 from app import models
 
-SQLALCHEMY_DATABASE_URL = f"{settings.test_database_url}"
+SQLALCHEMY_DATABASE_URL = f"{settings.database_url}"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
