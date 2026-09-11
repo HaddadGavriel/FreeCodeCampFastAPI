@@ -6,8 +6,7 @@ jobs:
     job1:
         environment: testing
         env:
-            DATABASE_URL: "${{ secrets.TEST_DATABASE_URL }}"
-            TEST_DATABASE_URL: "${{ secrets.TEST_DATABASE_URL }}"
+            TEST_DATABASE_URL: "${{ secrets.DATABASE_URL }}"
             JWT_SECRET_KEY: "${{ secrets.JWT_SECRET_KEY }}"
             JWT_ALGORITHM: "${{ secrets.JWT_ALGORITHM }}"
             JWT_ACCESS_TOKEN_EXPIRE_MINUTES: "${{ secrets.JWT_ACCESS_TOKEN_EXPIRE_MINUTES }}"
