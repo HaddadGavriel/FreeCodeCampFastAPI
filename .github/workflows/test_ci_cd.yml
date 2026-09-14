@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  job1:
+  CI:
     environment: testing
     runs-on: ubuntu-latest
 
