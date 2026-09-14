@@ -1,6 +1,10 @@
-name: Build, Test, and Deploy
+name: Testing CI
 
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   job1:
